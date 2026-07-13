@@ -1,0 +1,67 @@
+kyna 9a : https://tikcikalhs2.github.io/Kyna9A/
+almirah 9a : https://tikcikalhs2.github.io/almirah9a_2/
+
+rakha 9b : https://tikcikalhs2.github.io/rakha9b/
+alviano 9b : https://tikcikalhs2.github.io/Alviano-9B/
+
+nadhirah 9c : https://tikcikalhs2.github.io/nadhirah9C/
+Dzaki 9C : https://tikcikalhs2.github.io/Dzaky-9C/Catalog.html
+
+
+peta materi nya ganti menjadi Desain web - Dreamweaver, dan Web Hostig dengan Github
+ganti foto karya dibawah nya saya sudah menambahkan pada folder img,
+ 
+yasmin 9A.png beri caption : Yasmin 9A - Animasi , beri link untuk di play https://drive.google.com/file/d/10x36ie_HaSfxy62aZWlW4UQk31InIR8H/view?usp=sharing
+Keinan 9A.png beri caption : Keinan 9A - Animasi , beri link untuk di play https://drive.google.com/file/d/1werDgM8j5Kw9rCU4pstYJku1rLDE362V/view?usp=sharing
+
+keysha 9B.png beri caption : Keysha 9B - Animasi , beri link untuk di play https://drive.google.com/file/d/19wmNPdWndY9Z6SxtySK1CGN3NzdZLLXZ/view?usp=sharing
+salma 9B.png beri caption : Salma 9B - Animasi , beri link untuk di play https://drive.google.com/file/d/1jWUsafM86BE_uhlvpKorPsvVeHe0ttmL/view?usp=sharing
+
+nadhirah 9C.png beri caption : Nadhirah 9C - Animasi , beri link untuk di play https://drive.google.com/file/d/1pm8YXlCE0ffgkb5tijPqmeWrp9XBhz3_/view?usp=sharing
+afghan 9C.png beri caption : Afghan 9C - Animasi , beri link untuk di play https://drive.google.com/file/d/1HtPXW-cjbGyipNgVrNiz_Ywbgv1CC_Dh/view?usp=sharing
+
+
+
+
+buat gambar karya nya bisa di klik di perbesar seperti pada menu foto kbm
+
+
+saya mau tambah halaman baru yaitu foto_kegiatan.html
+
+
+
+berisi foto foto dokumentasi guru dan siswa di kompetisi pesona edu young creator competition 2025
+
+
+
+isi foto nya ada di folder "kompetisi"
+
+
+
+opening.png beri caption Pembukaan Grand Final Pesona Edu Young Creator Competition 2025
+
+
+
+presentasi1.png beri caption Presentasi peserta dari SMP Islam Cikal Harapan 2 Finalis kategori animasi
+
+
+
+presentasi2.png beri caption Presentasi peserta dari SMP Islam Cikal Harapan 2 Finalis kategori  cipta game
+
+
+
+finalis1.png beri caption Foto 5 Besar Finalis pesona edu young creator competition 2025 kategori cipta game
+
+
+
+finalis2.png beri caption Foto 5 Besar Finalis pesona edu young creator competition 2025 kategori animasi
+
+
+
+peserta1.png beri caption Ayesha Mala Anandita Kelas 9 Peserta Juara ke 5 Animasi
+
+peserta2.png beri caption Muhammad Fahlefi Kelas 7 Peserta Juara ke 5 Cipta Game
+
+
+
+bersama.png beri caption Foto bersama kedua Juara Kompetisi Pesona Edu Young Creator Competition 2025 dari SMP Islam CIkal Harapan 2
