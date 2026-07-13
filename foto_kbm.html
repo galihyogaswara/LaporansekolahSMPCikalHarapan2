@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Foto KBM - Laporan Sekolah</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== TOKENS =====
+       Navy   #0f2942  - primary / header text
+       Slate  #1e3a5f  - secondary navy
+       Gold   #b8860b  - accent (academic, restrained)
+       Paper  #f5f6f8  - page background
+       Ink    #334155  - body text
+    */
+    * {box-sizing:border-box;margin:0;padding:0}
+    body {
+      font-family:'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background:#f5f6f8;
+      color:#334155;
+      line-height:1.6;
+      scroll-behavior:smooth;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      background:#0f2942;
+      padding:0;
+      position:sticky;
+      top:0;
+      z-index:100;
+      box-shadow:0 2px 12px rgba(15,41,66,.25);
+      border-bottom:2px solid #b8860b;
+    }
+    .nav-container {
+      max-width:1200px;
+      margin:0 auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:16px 24px;
+    }
+    .nav-brand {
+      font-family:'Source Serif 4', Georgia, serif;
+      font-size:15px;
+      font-weight:700;
+      color:#f5f6f8;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      letter-spacing:.2px;
+    }
+    .nav-brand::after {
+      content:"";
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:#b8860b;
+      display:inline-block;
+      animation:dotBlink 2s ease-in-out infinite;
+    }
+    @keyframes dotBlink {
+      0%,100% {opacity:1;transform:scale(1)}
+      50% {opacity:.35;transform:scale(.7)}
+    }
+    nav ul {
+      list-style:none;
+      display:flex;
+      gap:4px;
+    }
+    nav a {
+      color:#c7d2e0;
+      text-decoration:none;
+      padding:10px 18px;
+      border-radius:4px;
+      font-weight:500;
+      font-size:14px;
+      transition:background .2s ease, color .2s ease;
+      position:relative;
+    }
+    nav a:hover {
+      background:rgba(184,134,11,0.15);
+      color:#fff;
+    }
+    nav a.active {
+      background:#b8860b;
+      color:#0f2942;
+      font-weight:700;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background:#0f2942;
+      color:#fff;
+      padding:80px 24px 96px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(184,134,11,.4);
+    }
+
+    /* Drifting glow blobs behind the header content, for depth */
+    .bg-blob {
+      position:absolute;
+      border-radius:50%;
+      filter:blur(50px);
+      pointer-events:none;
+      z-index:0;
+    }
+    .bg-blob.b1 {
+      width:280px;height:280px;
+      background:radial-gradient(circle,rgba(184,134,11,.35),transparent 70%);
+      top:-90px;left:-60px;
+      animation:driftA 14s ease-in-out infinite;
+    }
+    .bg-blob.b2 {
+      width:220px;height:220px;
+      background:radial-gradient(circle,rgba(56,189,248,.25),transparent 70%);
+      bottom:-100px;right:-40px;
+      animation:driftB 16s ease-in-out infinite;
+    }
+    .bg-blob.b3 {
+      width:160px;height:160px;
+      background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%);
+      top:20%;right:15%;
+      animation:driftA 11s ease-in-out infinite reverse;
+    }
+    @keyframes driftA {
+      0%,100% {transform:translate(0,0) scale(1)}
+      50% {transform:translate(30px,20px) scale(1.15)}
+    }
+    @keyframes driftB {
+      0%,100% {transform:translate(0,0) scale(1)}
+      50% {transform:translate(-25px,-25px) scale(1.1)}
+    }
+
+    /* Floating school/TIK-themed doodles */
+    .doodle {
+      position:absolute;
+      font-size:32px;
+      opacity:.28;
+      z-index:0;
+      filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));
+      animation:float 7s ease-in-out infinite;
+    }
+    .doodle:nth-child(4) {top:18%;left:9%;animation-delay:0s;}
+    .doodle:nth-child(5) {top:68%;left:14%;animation-delay:1.2s;font-size:28px;}
+    .doodle:nth-child(6) {top:22%;right:10%;animation-delay:2.1s;font-size:36px;}
+    .doodle:nth-child(7) {top:72%;right:14%;animation-delay:.7s;}
+    .doodle:nth-child(8) {top:44%;left:50%;animation-delay:1.7s;font-size:30px;opacity:.2;}
+
+    @keyframes float {
+      0%, 100% {transform:translateY(0) rotate(0deg)}
+      50% {transform:translateY(-16px) rotate(8deg)}
+    }
+
+    .header-content {
+      position:relative;
+      z-index:1;
+      max-width:800px;
+      margin:0 auto;
+    }
+    header h1 {
+      font-family:'Source Serif 4', Georgia, serif;
+      font-size:40px;
+      margin-bottom:14px;
+      font-weight:700;
+      letter-spacing:-.2px;
+    }
+    header p {
+      font-size:16px;
+      font-weight:500;
+      color:#c7d2e0;
+      letter-spacing:.3px;
+    }
+
+    /* ===== CONTAINER ===== */
+    .container {
+      width:92%;
+      max-width:1200px;
+      margin:-56px auto 40px;
+      background:#fff;
+      padding:48px 32px;
+      border-radius:6px;
+      box-shadow:0 12px 32px rgba(15,41,66,.12);
+      position:relative;
+      border:1px solid #e2e8f0;
+    }
+
+    /* ===== GALLERY INTRO ===== */
+    .gallery-intro {
+      text-align:center;
+      margin-bottom:40px;
+    }
+    .gallery-intro h2 {
+      font-family:'Source Serif 4', Georgia, serif;
+      font-size:32px;
+      color:#0f2942;
+      margin-bottom:12px;
+      font-weight:700;
+      position:relative;
+      display:inline-block;
+    }
+    .gallery-intro h2::after {
+      content:"";
+      position:absolute;
+      bottom:-8px;
+      left:50%;
+      transform:translateX(-50%);
+      width:70px;
+      height:3px;
+      background:#b8860b;
+      border-radius:2px;
+    }
+    .gallery-intro p {
+      color:#64748b;
+      font-size:15px;
+      max-width:600px;
+      margin:18px auto 0;
+      font-weight:400;
+    }
+
+    .gallery-grid {
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:24px;
+      margin-top:32px;
+      max-width:900px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+
+    .gallery-item {
+      background:#fff;
+      border-radius:6px;
+      overflow:hidden;
+      box-shadow:0 4px 16px rgba(15,41,66,.08);
+      transition:transform .3s ease, box-shadow .3s ease;
+      position:relative;
+      border:1px solid #e2e8f0;
+      cursor:pointer;
+    }
+
+    .gallery-item::before {
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:3px;
+      background:#b8860b;
+      transform:scaleX(0);
+      transition:transform .3s ease;
+      z-index:1;
+    }
+
+    .gallery-item:hover::before {
+      transform:scaleX(1);
+    }
+
+    .gallery-item:hover {
+      transform:translateY(-6px);
+      box-shadow:0 12px 28px rgba(15,41,66,.16);
+    }
+
+    .gallery-item img {
+      width:100%;
+      height:250px;
+      object-fit:cover;
+      display:block;
+      transition:transform .4s ease;
+    }
+
+    .gallery-item:hover img {
+      transform:scale(1.04);
+    }
+
+    .gallery-caption {
+      padding:20px;
+      background:#fff;
+    }
+
+    .gallery-caption h3 {
+      font-family:'Source Serif 4', Georgia, serif;
+      font-size:17px;
+      color:#0f2942;
+      margin-bottom:8px;
+      font-weight:700;
+    }
+
+    .gallery-caption p {
+      font-size:14px;
+      color:#64748b;
+      line-height:1.6;
+      font-weight:400;
+    }
+
+    .gallery-tag {
+      display:inline-block;
+      background:#0f2942;
+      color:#fff;
+      padding:4px 12px;
+      border-radius:3px;
+      font-size:11px;
+      font-weight:600;
+      letter-spacing:.4px;
+      text-transform:uppercase;
+      margin-top:10px;
+    }
+
+    /* ===== LIGHTBOX ===== */
+    .lightbox {
+      display:none;
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background:rgba(15,41,66,.92);
+      z-index:1000;
+      align-items:center;
+      justify-content:center;
+      animation:fadeIn .3s ease;
+    }
+
+    .lightbox.active {
+      display:flex;
+    }
+
+    .lightbox-content {
+      position:relative;
+      max-width:90%;
+      max-height:90%;
+      animation:zoomIn .3s ease;
+    }
+
+    .lightbox-content img {
+      max-width:100%;
+      max-height:90vh;
+      border-radius:6px;
+      box-shadow:0 20px 60px rgba(0,0,0,.5);
+    }
+
+    .lightbox-close {
+      position:absolute;
+      top:20px;
+      right:20px;
+      color:#fff;
+      font-size:36px;
+      cursor:pointer;
+      width:46px;
+      height:46px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.3);
+      border-radius:50%;
+      transition:all .2s;
+    }
+
+    .lightbox-close:hover {
+      background:#b8860b;
+      border-color:#b8860b;
+      transform:rotate(90deg);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background:#0f2942;
+      color:#c7d2e0;
+      text-align:center;
+      padding:36px 24px;
+      margin-top:60px;
+      font-size:14px;
+      position:relative;
+    }
+
+    footer::before {
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:2px;
+      background:#b8860b;
+    }
+
+    .footer-content {
+      max-width:1000px;
+      margin:0 auto;
+      position:relative;
+      z-index:1;
+    }
+    .footer-text {
+      margin-bottom:10px;
+      font-weight:600;
+      font-size:14px;
+      color:#fff;
+    }
+    .footer-links {
+      display:flex;
+      justify-content:center;
+      gap:24px;
+      margin-top:18px;
+    }
+    .footer-links a {
+      color:#c7d2e0;
+      text-decoration:none;
+      transition:color .2s ease;
+      font-weight:500;
+      padding:6px 12px;
+      border-radius:3px;
+    }
+    .footer-links a:hover {
+      color:#fff;
+      background:rgba(255,255,255,0.08);
+    }
+
+    /* ===== ANIMATION KEYFRAMES ===== */
+    @keyframes fadeIn {
+      from{opacity:0}
+      to{opacity:1}
+    }
+    @keyframes zoomIn {
+      from{opacity:0;transform:scale(.7)}
+      to{opacity:1;transform:scale(1)}
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:768px){
+      header {padding:56px 20px 72px}
+      header h1 {font-size:30px}
+      header p {font-size:13px}
+      .nav-container {flex-direction:column;gap:16px;padding:16px}
+      nav ul {flex-wrap:wrap;justify-content:center}
+      .container {margin-top:-36px;padding:32px 20px}
+      .gallery-intro h2 {font-size:26px}
+      .gallery-grid {grid-template-columns:1fr !important;gap:20px}
+      .gallery-item img {height:220px}
+      .lightbox-close {top:10px;right:10px;font-size:28px;width:40px;height:40px}
+      .doodle {font-size:22px !important}
+      .bg-blob.b1 {width:180px;height:180px}
+      .bg-blob.b2 {width:150px;height:150px}
+      .bg-blob.b3 {display:none}
+    }
+    @media(max-width:420px){
+      header {padding:48px 16px 64px}
+      header h1 {font-size:24px}
+      header p {font-size:12px}
+      .container {padding:24px 16px}
+      .gallery-caption {padding:16px}
+      .footer-links {gap:14px;flex-wrap:wrap}
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <div class="nav-brand">Laporan Sekolah</div>
+      <ul>
+        <li><a href="index.html">Profil</a></li>
+        <li><a href="foto_kbm.html" class="active">Foto KBM</a></li>
+        <li><a href="kelas7.html">Kelas 7</a></li>
+        <li><a href="kelas8.html">Kelas 8</a></li>
+        <li><a href="kelas9.html">Kelas 9</a></li>
+        <li><a href="foto_kegiatan.html">Foto Kegiatan</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header>
+    <div class="bg-blob b1"></div>
+    <div class="bg-blob b2"></div>
+    <div class="bg-blob b3"></div>
+    <span class="doodle">📸</span>
+    <span class="doodle">📚</span>
+    <span class="doodle">✏️</span>
+    <span class="doodle">🎨</span>
+    <span class="doodle">⭐</span>
+    <div class="header-content">
+      <h1>📸 Galeri Foto KBM</h1>
+      <p>Dokumentasi kegiatan belajar mengajar di kelas</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="gallery-intro">
+      <h2>Kegiatan Belajar Mengajar</h2>
+      <p>Koleksi foto dokumentasi aktivitas pembelajaran siswa di kelas yang menunjukkan suasana belajar yang aktif dan menyenangkan</p>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item" onclick="openLightbox('img/fotokbm-1.jpg')">
+        <img src="img/fotokbm-1.jpg" alt="Kegiatan Belajar Mengajar 1">
+        <div class="gallery-caption">
+          <h3>Pembelajaran Aktif</h3>
+          <p>Siswa aktif berdiskusi dan berkolaborasi dalam kegiatan pembelajaran kelompok</p>
+          <span class="gallery-tag">Kolaborasi</span>
+        </div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox('img/fotokbm-2.jpg')">
+        <img src="img/fotokbm-2.jpg" alt="Kegiatan Belajar Mengajar 2">
+        <div class="gallery-caption">
+          <h3>Suasana Kelas</h3>
+          <p>Suasana belajar yang kondusif dan interaktif di dalam kelas</p>
+          <span class="gallery-tag">Interaktif</span>
+        </div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox('img/fotokbm-3.jpg')">
+        <img src="img/fotokbm-3.jpg" alt="Kegiatan Belajar Mengajar 3">
+        <div class="gallery-caption">
+          <h3>Praktik Langsung</h3>
+          <p>Siswa melakukan praktik dan eksperimen untuk memahami materi dengan lebih baik</p>
+          <span class="gallery-tag">Praktikum</span>
+        </div>
+      </div>
+
+      <div class="gallery-item" onclick="openLightbox('img/fotokbm-4.jpg')">
+        <img src="img/fotokbm-4.jpg" alt="Kegiatan Belajar Mengajar 4">
+        <div class="gallery-caption">
+          <h3>Presentasi Siswa</h3>
+          <p>Siswa mempresentasikan hasil kerja kelompok di depan kelas dengan percaya diri</p>
+          <span class="gallery-tag">Presentasi</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close">&times;</span>
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="Preview">
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-text">
+        <strong>© 2026 Sistem Laporan Sekolah</strong>
+      </div>
+      <div style="opacity:.8;margin-top:8px;font-size:13px;font-weight:600">
+        Dikembangkan dengan dedikasi untuk kemajuan pendidikan 🎓
+      </div>
+      <div class="footer-links">
+        <a href="tentang.html">Tentang</a>
+        <a href="kontak.html">Kontak</a>
+        <a href="#">Bantuan</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function openLightbox(imgSrc) {
+      document.getElementById('lightbox').classList.add('active');
+      document.getElementById('lightbox-img').src = imgSrc;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Close lightbox with ESC key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeLightbox();
+      }
+    });
+  </script>
+
+</body>
+</html>

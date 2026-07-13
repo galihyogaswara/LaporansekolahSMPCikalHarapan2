@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Profil - Laporan Sekolah</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== TOKENS =====
+       Navy   #0f2942  - primary / header text
+       Slate  #1e3a5f  - secondary navy
+       Gold   #b8860b  - accent (academic, restrained)
+       Paper  #f5f6f8  - page background
+       Ink    #334155  - body text
+    */
+    * {box-sizing:border-box;margin:0;padding:0}
+    body {
+      font-family:'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background:#f5f6f8;
+      color:#334155;
+      line-height:1.6;
+      scroll-behavior:smooth;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      background:#0f2942;
+      padding:0;
+      position:sticky;
+      top:0;
+      z-index:100;
+      box-shadow:0 2px 12px rgba(15,41,66,.25);
+      border-bottom:2px solid #b8860b;
+    }
+    .nav-container {
+      max-width:1200px;
+      margin:0 auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:16px 24px;
+    }
+    .nav-brand {
+      font-family:'Source Serif 4', Georgia, serif;
+      font-size:15px;
+      font-weight:700;
+      color:#f5f6f8;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      letter-spacing:.2px;
+    }
+    .nav-brand::after {
+      content:"";
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:#b8860b;
+      display:inline-block;
+      animation:dotBlink 2s ease-in-out infinite;
+    }
+    @keyframes dotBlink {
+      0%,100% {opacity:1;transform:scale(1)}
+      50% {opacity:.55;transform:scale(.85)}
+    }
+    nav ul {
+      list-style:none;
+      display:flex;
+      gap:4px;
+    }
+    nav a {
+      color:#c7d2e0;
+      text-decoration:none;
+      padding:10px 18px;
+      border-radius:4px;
+      font-weight:500;
+      font-size:14px;
+      transition:background .2s ease, color .2s ease;
+      position:relative;
+    }
+    nav a:hover {
+      background:rgba(184,134,11,0.15);
+      color:#fff;
+    }
+    nav a.active {
+      background:#b8860b;
+      color:#0f2942;
+      font-weight:700;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background:#0f2942;
+      color:#fff;
+      padding:80px 24px 96px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid rgba(184,134,11,.4);
+    }
+
+    /* Drifting glow blobs behind the header content, for depth */
+    .bg-blob {
+      position:absolute;
+      border-radius:50%;
+      filter:blur(50px);
+      pointer-events:none;
+      z-index:0;
+    }
+    .bg-blob.b1 {
+      width:280px;height:280px;
+      background:radial-gradient(circle,rgba(184,134,11,.35),transparent 70%);
+      top:-90px;left:-60px;
+      animation:driftA 20s ease-in-out infinite;
+    }
+    .bg-blob.b2 {
+      width:220px;height:220px;
+      background:radial-gradient(circle,rgba(56,189,248,.25),transparent 70%);
+      bottom:-100px;right:-40px;
+      animation:driftB 22s ease-in-out infinite;
+    }
+    .bg-blob.b3 {
+      width:160px;height:160px;
+      background:radial-gradient(circle,rgba(255,255,255,.12),transparent 70%);
+      top:20%;right:15%;
+      animation:driftA 18s ease-in-out infinite reverse;
+    }
+    @keyframes driftA {
+      0%,100% {transform:translate(0,0)}
+      50% {transform:translate(18px,12px)}
+    }
+    @keyframes driftB {
+      0%,100% {transform:translate(0,0)}
+      50% {transform:translate(-16px,-14px)}
+    }
+
+    /* Floating school/TIK-themed doodles */
+    .doodle {
+      position:absolute;
+      font-size:32px;
+      opacity:.22;
+      z-index:0;
+      filter:drop-shadow(0 4px 6px rgba(0,0,0,.25));
+      animation:float 9s ease-in-out infinite;
+    }
+    .doodle:nth-child(1) {top:18%;left:9%;animation-delay:0s;}
+    .doodle:nth-child(2) {top:68%;left:14%;animation-delay:1.8s;font-size:28px;}
+    .doodle:nth-child(3) {top:22%;right:10%;animation-delay:3.6s;font-size:36px;}
+    .doodle:nth-child(4) {top:72%;right:14%;animation-delay:5.4s;}
+    .doodle:nth-child(5) {top:44%;left:50%;animation-delay:7.2s;font-size:30px;opacity:.16;}
+
+    @keyframes float {
+      0%, 100% {transform:translateY(0) rotate(0deg)}
+      50% {transform:translateY(-10px) rotate(4deg)}
+    }
+
+    .header-content {
+      position:relative;
+      z-index:1;
+      max-width:800px;
+      margin:0 auto;
+    }
+    header h1 {
+      font-family:'Source Serif 4', Georgia, serif;
+      font-size:40px;
+      margin-bottom:14px;
+      font-weight:700;
+      letter-spacing:-.2px;
+    }
+    header p {
+      font-size:16px;
+      font-weight:500;
+      color:#c7d2e0;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+    }
+
+    /* ===== CONTAINER ===== */
+    .container {
+      width:92%;
+      max-width:1000px;
+      margin:-56px auto 40px;
+      background:#fff;
+      padding:0;
+      border-radius:6px;
+      box-shadow:0 12px 32px rgba(15,41,66,.12);
+      overflow:hidden;
+      border:1px solid #e2e8f0;
+    }
+
+    /* ===== PROFILE CARD ===== */
+    .profile-header {
+      background:#fff;
+      padding:48px 32px 24px;
+      text-align:center;
+      position:relative;
+      border-bottom:1px solid #eef1f5;
+      overflow:hidden;
+    }
+    .subject-deco {
+      position:absolute;
+      font-size:26px;
+      opacity:.14;
+      pointer-events:none;
+      animation:float 8s ease-in-out infinite;
+      z-index:0;
+    }
+    .subject-deco.d1 {top:12%;left:6%;animation-delay:.3s;}
+    .subject-deco.d2 {top:70%;left:10%;font-size:22px;animation-delay:1.6s;}
+    .subject-deco.d3 {top:15%;right:7%;animation-delay:1s;}
+    .subject-deco.d4 {top:68%;right:9%;font-size:24px;animation-delay:2.2s;}
+    .profile-header > * {position:relative;z-index:1;}
+    .profile-avatar {
+      position:relative;
+      display:inline-block;
+      margin-bottom:20px;
+      padding:8px;
+    }
+    .profile-avatar::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:50%;
+      border:3px dashed #b8860b;
+      opacity:.45;
+      animation:spinRing 26s linear infinite;
+    }
+    @keyframes spinRing {
+      from {transform:rotate(0deg)}
+      to {transform:rotate(360deg)}
+    }
+    .profile-avatar img {
+      width:160px;
+      height:160px;
+      border-radius:50%;
+      object-fit:cover;
+      border:4px solid #f5f6f8;
+      box-shadow:0 6px 20px rgba(15,41,66,.15);
+      transition:box-shadow .3s ease, transform .3s ease;
+      position:relative;
+      z-index:1;
+    }
+    .profile-avatar img:hover {
+      transform:scale(1.04);
+    }
+    .profile-avatar img:hover {
+      box-shadow:0 8px 28px rgba(15,41,66,.22);
+    }
+    .profile-avatar::after {
+      content:"✓";
+      position:absolute;
+      bottom:8px;
+      right:8px;
+      background:#0f2942;
+      color:#fff;
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:16px;
+      font-weight:700;
+      border:3px solid #fff;
+      box-shadow:0 2px 8px rgba(15,41,66,.3);
+    }
+
+    .profile-info {
+      padding:0 32px 32px;
+    }
+    .profile-info h2 {
+      font-family:'Source Serif 4', Georgia, serif;
+      font-size:30px;
+      margin-bottom:10px;
+      font-weight:700;
+      color:#0f2942;
+    }
+    .profile-badge {
+      display:inline-block;
+      background:#0f2942;
+      color:#fff;
+      padding:6px 18px;
+      border-radius:3px;
+      font-size:12px;
+      font-weight:600;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+      margin-bottom:22px;
+      box-shadow:0 0 0 rgba(184,134,11,.5);
+      animation:badgePulse 3.6s ease-in-out infinite;
+    }
+    @keyframes badgePulse {
+      0%,100% {box-shadow:0 0 0 0 rgba(184,134,11,.3)}
+      50% {box-shadow:0 0 0 5px rgba(184,134,11,0)}
+    }
+    .profile-description {
+      font-size:15px;
+      color:#475569;
+      max-width:700px;
+      margin:0 auto 24px;
+      line-height:1.8;
+      font-weight:400;
+      background:#f8fafc;
+      padding:22px 24px;
+      border-radius:4px;
+      border-left:3px solid #b8860b;
+      text-align:left;
+    }
+
+    /* ===== STATS ===== */
+    .stats {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:1px;
+      background:#e2e8f0;
+      margin-top:0;
+    }
+    .stat-item {
+      background:#fff;
+      padding:32px 20px;
+      text-align:center;
+      transition:background .25s ease;
+      position:relative;
+    }
+    .stat-item::before {
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:3px;
+      background:#b8860b;
+      transform:scaleX(0);
+      transition:transform .3s ease;
+    }
+    .stat-item:hover::before {
+      transform:scaleX(1);
+    }
+    .stat-item:hover {
+      background:#f8fafc;
+    }
+    .stat-number {
+      font-family:'Source Serif 4', Georgia, serif;
+      font-size:36px;
+      font-weight:700;
+      color:#0f2942;
+      margin-bottom:6px;
+    }
+    .stat-label {
+      font-size:12px;
+      color:#64748b;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      font-weight:600;
+    }
+
+    /* ===== INFO SECTION ===== */
+    .info-section {
+      padding:40px 32px 48px;
+      text-align:center;
+    }
+    .info-card {
+      background:#f8fafc;
+      border-left:4px solid #0f2942;
+      padding:26px 28px;
+      border-radius:4px;
+      max-width:700px;
+      margin:0 auto;
+      text-align:left;
+      transition:box-shadow .2s ease;
+    }
+    .info-card:hover {
+      box-shadow:0 6px 18px rgba(15,41,66,.08);
+    }
+    .info-card h3 {
+      font-family:'Source Serif 4', Georgia, serif;
+      font-size:18px;
+      color:#0f2942;
+      margin-bottom:14px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-weight:700;
+    }
+    .info-card h3::before {
+      content:"";
+      display:none;
+    }
+    .info-card p {
+      color:#475569;
+      font-size:14px;
+      line-height:1.8;
+      font-weight:400;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background:#0f2942;
+      color:#c7d2e0;
+      text-align:center;
+      padding:36px 24px;
+      margin-top:60px;
+      font-size:14px;
+      position:relative;
+    }
+
+    footer::before {
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:2px;
+      background:#b8860b;
+    }
+
+    .footer-content {
+      max-width:1000px;
+      margin:0 auto;
+      position:relative;
+      z-index:1;
+    }
+    .footer-text {
+      margin-bottom:10px;
+      font-weight:600;
+      font-size:14px;
+      color:#fff;
+    }
+    .footer-links {
+      display:flex;
+      justify-content:center;
+      gap:24px;
+      margin-top:18px;
+    }
+    .footer-links a {
+      color:#c7d2e0;
+      text-decoration:none;
+      transition:color .2s ease;
+      font-weight:500;
+      padding:6px 12px;
+      border-radius:3px;
+    }
+    .footer-links a:hover {
+      color:#fff;
+      background:rgba(255,255,255,0.08);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:768px){
+      header h1 {font-size:30px}
+      header p {font-size:13px}
+      .nav-container {flex-direction:column;gap:16px;padding:16px}
+      nav ul {flex-wrap:wrap;justify-content:center}
+      .container {margin-top:-36px}
+      .profile-header {padding:32px 20px 20px}
+      .profile-avatar img {width:130px;height:130px}
+      .profile-info {padding:0 20px 24px}
+      .profile-info h2 {font-size:24px}
+      .info-section {padding:28px 20px 36px}
+      .stats {grid-template-columns:1fr 1fr}
+      .stat-number {font-size:28px}
+      .doodle {font-size:22px !important}
+      .subject-deco {display:none}
+      .bg-blob.b1 {width:180px;height:180px}
+      .bg-blob.b2 {width:150px;height:150px}
+      .bg-blob.b3 {display:none}
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <div class="nav-brand">Laporan Sekolah</div>
+      <ul>
+        <li><a href="index.html" class="active">Profil</a></li>
+        <li><a href="foto_kbm.html">Foto KBM</a></li>
+        <li><a href="kelas7.html">Kelas 7</a></li>
+        <li><a href="kelas8.html">Kelas 8</a></li>
+        <li><a href="kelas9.html">Kelas 9</a></li>
+        <li><a href="foto_kegiatan.html">Foto Kegiatan</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header>
+    <div class="bg-blob b1"></div>
+    <div class="bg-blob b2"></div>
+    <div class="bg-blob b3"></div>
+    <span class="doodle">👨‍🏫</span>
+    <span class="doodle">📚</span>
+    <span class="doodle">💻</span>
+    <span class="doodle">⭐</span>
+    <span class="doodle">🎓</span>
+    <div class="header-content">
+      <h1>Sistem Laporan Pembelajaran TIK</h1>
+      <p>SMP Islam Cikal Harapan 2 T.A 25/26 Semester 2</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="profile-header">
+      <span class="subject-deco d1">📐</span>
+      <span class="subject-deco d2">🖱️</span>
+      <span class="subject-deco d3">🔬</span>
+      <span class="subject-deco d4">🌐</span>
+      <div class="profile-avatar">
+        <img src="img/guru 2.png" alt="Foto Guru">
+      </div>
+    </div>
+
+    <div class="profile-info">
+      <h2>Galih Gumilar Yogaswara, A.Md.Kom</h2>
+      <div class="profile-badge">👨‍🏫 Guru SMP & TK</div>
+      <p class="profile-description">
+       Halo, nama saya Galih Gumilar Yogaswara. Saya adalah seorang guru komputer dengan pengalaman lebih dari 5 tahun dalam mengajar dan membimbing siswa di bidang teknologi informasi. Saya memiliki kemampuan teknis yang kuat di berbagai aspek komputer, serta berkomitmen untuk membantu peserta didik memahami dan menguasai keterampilan digital dengan efektif dan menyenangkan.
+      </p>
+    </div>
+
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-number">5+</div>
+        <div class="stat-label">Tahun Pengalaman</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">100+</div>
+        <div class="stat-label">Siswa Terdaftar</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Tingkat Kelas</div>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <div class="info-card">
+        <h3>Panduan Penggunaan</h3>
+        <p>
+          Gunakan menu navigasi di bagian atas untuk mengakses berbagai fitur sistem ini. 
+          Anda dapat melihat dokumentasi kegiatan belajar mengajar, laporan perkembangan 
+          siswa per kelas, serta kata-kata motivasi untuk meningkatkan semangat belajar 
+          peserta didik. Semua data diperbaharui secara berkala untuk memastikan informasi 
+          yang akurat dan terkini.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-text">
+        <strong>© 2026 Sistem Laporan Sekolah</strong>
+      </div>
+      <div style="opacity:.8;margin-top:8px;font-size:13px;font-weight:600">
+        Dikembangkan dengan dedikasi untuk kemajuan pendidikan 🎓
+      </div>
+      <div class="footer-links">
+        <a href="tentang.html">Tentang</a>
+        <a href="kontak.html">Kontak</a>
+        
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
